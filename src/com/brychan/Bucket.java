@@ -38,8 +38,8 @@ public class Bucket {
 	}
 	
 	void update(double velocity) {
-		angular += (velocity/MalkusWaterwheel.FPS);
-		mass -= (0.04 / MalkusWaterwheel.FPS);
+		angular += (velocity/WaterwheelPanel.FPS);
+		mass -= (0.04 / WaterwheelPanel.FPS);
 		mass = (mass < 0) ? 0 : mass;
 	}
 	

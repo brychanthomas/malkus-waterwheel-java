@@ -10,7 +10,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
-public class MalkusWaterwheel extends JPanel {
+public class MalkusWaterwheel {
 	Bucket[] buckets;
 	double velocity = 0;
 	double radius = 1;
@@ -18,7 +18,6 @@ public class MalkusWaterwheel extends JPanel {
 	int    numBuckets = 8;
 	int centreX;
 	int centreY;
-	static final int FPS = 40;
 	
 	MalkusWaterwheel (int centreXCoord, int centreYCoord) {
 		centreX = centreXCoord;
@@ -30,11 +29,8 @@ public class MalkusWaterwheel extends JPanel {
 		}
 	}
 
-	@Override
 	public void paint(Graphics g) {
 		Graphics2D graphics = (Graphics2D)g;
-		graphics.setColor(Color.WHITE);
-		graphics.fillRect(0,  0, 550, 250);
 		graphics.setColor(Color.ORANGE);
 		graphics.fillOval(centreX-90, centreY-100, (int)radius*200, (int)radius*200);
 		graphics.setColor(Color.WHITE);
@@ -44,7 +40,7 @@ public class MalkusWaterwheel extends JPanel {
 			force += buckets[i].calculateForce();
 		}
 		double acc = (force) / (mass() * radius);
-		velocity += acc / FPS;
+		velocity += acc / WaterwheelPanel.FPS;
 		double minY = 10000;
 		double y = 0;
 		int    minYIdx = 0;
@@ -54,7 +50,7 @@ public class MalkusWaterwheel extends JPanel {
 			minY = Math.min(y, minY); //find smallest y coordinate
 			minYIdx = (minY == y) ? i : minYIdx;
 		}
-		buckets[minYIdx].mass += 0.3 / FPS; //increase  mass of top bucket
+		buckets[minYIdx].mass += 0.3 / WaterwheelPanel.FPS; //increase  mass of top bucket
 		buckets[minYIdx].mass = (buckets[minYIdx].mass > 0.5) ? 0.5 : buckets[minYIdx].mass; //limit mass to 1
 	 }
 	
@@ -64,23 +60,5 @@ public class MalkusWaterwheel extends JPanel {
 			bucketMass += buckets[i].mass;
 		}
 		return bucketMass + wheelMass;
-	}
-	
-	
-	public static void main(String[] args) {
-		JFrame frame = new JFrame("Malkus waterwheel");
-		MalkusWaterwheel mww = new MalkusWaterwheel(100, 100);
-		frame.add(mww);
-		frame.setSize(550, 250);
-		frame.setVisible(true);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		
-		ActionListener updater = new ActionListener() {
-	    	@Override
-	    	public void actionPerformed(ActionEvent evt) {
-	    		mww.repaint();
-	    	}
-	    };
-	    new Timer(1000/FPS, updater).start();
 	}
 }
