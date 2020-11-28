@@ -5,6 +5,10 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.io.FileWriter;
+import java.io.IOException;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -19,12 +23,17 @@ import javax.swing.Timer;
 public class WaterwheelPanel extends JPanel {
 	
 	static final int FPS = 30;
+	int frameCount = 0;
 	MalkusWaterwheel[] wheels;
+	FileWriter csvWriter;
 	
-	WaterwheelPanel () {
+	WaterwheelPanel () throws IOException {
 		wheels = new MalkusWaterwheel[2];
-		wheels[0] = new MalkusWaterwheel(100, 100, Math.PI/16);
-		wheels[1] = new MalkusWaterwheel(350, 100, Math.PI/17);
+		wheels[0] = new MalkusWaterwheel(100, 100, Math.toRadians(1));
+		wheels[1] = new MalkusWaterwheel(350, 100, Math.toRadians(2));
+		
+		initCSV();
+		
 		ActionListener updater = new ActionListener() {
 	    	@Override
 	    	public void actionPerformed(ActionEvent evt) {
@@ -42,14 +51,53 @@ public class WaterwheelPanel extends JPanel {
 		for (int i=0; i<wheels.length; i++) {
 			wheels[i].paint(g);
 		}
+		writeCSV();
+		frameCount++;
+	}
+	
+	private void initCSV() throws IOException {
+		csvWriter = new FileWriter("data.csv");
+		csvWriter.append("time,");
+		csvWriter.append("wheel1 angular velocity,");
+		csvWriter.append("wheel2 angular velocity\n");
+	}
+	
+	private void writeCSV() {
+		try {
+			double time = (double)frameCount / FPS;
+			csvWriter.append(Double.toString(time)+",");
+			csvWriter.append(Double.toString(wheels[0].velocity)+",");
+			csvWriter.append(Double.toString(wheels[1].velocity)+"\n");
+		} catch (IOException e) {
+			System.out.println("IOException!");
+		}
+	}
+	
+	private void closeCSV() {
+		try {
+			csvWriter.flush();
+			csvWriter.close();
+		} catch (IOException e) {
+			System.out.println("IOException!");
+		}
 	}
 	
 	public static void main(String[] args) {
 		JFrame frame = new JFrame("Malkus waterwheel");
-		WaterwheelPanel mww = new WaterwheelPanel();
-		frame.add(mww);
-		frame.setSize(500, 250);
-		frame.setVisible(true);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		try {
+			WaterwheelPanel panel = new WaterwheelPanel();
+			frame.add(panel);
+			frame.setSize(500, 250);
+			frame.setVisible(true);
+			frame.addWindowListener(new WindowAdapter() {
+	            @Override
+	            public void windowClosing(WindowEvent e) {
+	                panel.closeCSV();
+	                System.exit(0);
+	            }
+	        });
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 }

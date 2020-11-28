@@ -20,7 +20,7 @@ public class MalkusWaterwheel {
 	double velocity = 0;
 	double radius = 1;
 	double wheelMass = 10;
-	int    numBuckets = 8;
+	int    numBuckets = 16;
 	int centreX;
 	int centreY;
 	
@@ -54,7 +54,7 @@ public class MalkusWaterwheel {
 			minY = Math.min(y, minY); //find smallest y coordinate
 			minYIdx = (minY == y) ? i : minYIdx;
 		}
-		buckets[minYIdx].mass += 0.3 / WaterwheelPanel.FPS; //increase  mass of top bucket
+		buckets[minYIdx].mass += 0.25 / WaterwheelPanel.FPS; //increase  mass of top bucket
 		buckets[minYIdx].mass = (buckets[minYIdx].mass > 0.5) ? 0.5 : buckets[minYIdx].mass; //limit mass to 1
 	 }
 	
