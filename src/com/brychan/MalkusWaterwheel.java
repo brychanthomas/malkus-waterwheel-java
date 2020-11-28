@@ -10,6 +10,11 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
+/**
+ * Class to simulate and draw a Malkus waterwheel.
+ * 
+ * @author Brychan Thomas
+ */
 public class MalkusWaterwheel {
 	Bucket[] buckets;
 	double velocity = 0;
@@ -19,11 +24,10 @@ public class MalkusWaterwheel {
 	int centreX;
 	int centreY;
 	
-	MalkusWaterwheel (int centreXCoord, int centreYCoord) {
+	MalkusWaterwheel (int centreXCoord, int centreYCoord, double offset) {
 		centreX = centreXCoord;
 		centreY = centreYCoord;
 		buckets = new Bucket[numBuckets];
-		double offset = Math.PI/16;
 		for (int i = 0; i<numBuckets; i++) {
 			buckets[i] = new Bucket((i*2*Math.PI/numBuckets)+offset, radius*100, centreX, centreY);
 		}

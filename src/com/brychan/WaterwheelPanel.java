@@ -10,15 +10,21 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
+/**
+ * JPanel subclass to simulate several Malkus waterwheels in parallel.
+ * 
+ * @author Brychan
+ *
+ */
 public class WaterwheelPanel extends JPanel {
 	
-	static final int FPS = 40;
+	static final int FPS = 30;
 	MalkusWaterwheel[] wheels;
 	
 	WaterwheelPanel () {
 		wheels = new MalkusWaterwheel[2];
-		wheels[0] = new MalkusWaterwheel(100, 100);
-		wheels[1] = new MalkusWaterwheel(350, 100);
+		wheels[0] = new MalkusWaterwheel(100, 100, Math.PI/16);
+		wheels[1] = new MalkusWaterwheel(350, 100, Math.PI/17);
 		ActionListener updater = new ActionListener() {
 	    	@Override
 	    	public void actionPerformed(ActionEvent evt) {
@@ -42,7 +48,7 @@ public class WaterwheelPanel extends JPanel {
 		JFrame frame = new JFrame("Malkus waterwheel");
 		WaterwheelPanel mww = new WaterwheelPanel();
 		frame.add(mww);
-		frame.setSize(550, 250);
+		frame.setSize(500, 250);
 		frame.setVisible(true);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}

@@ -5,7 +5,8 @@ import java.awt.Graphics2D;
 
 
 /**
- * Class to represent a single bucket on a Malkus waterwheel.
+ * Class to simulate and draw a single bucket on a Malkus waterwheel.
+ * 
  * @author Brychan Thomas
  */
 public class Bucket {
