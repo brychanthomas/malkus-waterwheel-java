@@ -16,13 +16,17 @@ public class MalkusWaterwheel extends JPanel {
 	double radius = 1;
 	double wheelMass = 10;
 	int    numBuckets = 8;
+	int centreX;
+	int centreY;
 	static final int FPS = 40;
 	
-	MalkusWaterwheel () {
+	MalkusWaterwheel (int centreXCoord, int centreYCoord) {
+		centreX = centreXCoord;
+		centreY = centreYCoord;
 		buckets = new Bucket[numBuckets];
 		double offset = Math.PI/16;
 		for (int i = 0; i<numBuckets; i++) {
-			buckets[i] = new Bucket((i*2*Math.PI/numBuckets)+offset, radius*100);
+			buckets[i] = new Bucket((i*2*Math.PI/numBuckets)+offset, radius*100, centreX, centreY);
 		}
 	}
 
@@ -32,9 +36,9 @@ public class MalkusWaterwheel extends JPanel {
 		graphics.setColor(Color.WHITE);
 		graphics.fillRect(0,  0, 550, 250);
 		graphics.setColor(Color.ORANGE);
-		graphics.fillOval(10, 0, (int)radius*200, (int)radius*200);
+		graphics.fillOval(centreX-90, centreY-100, (int)radius*200, (int)radius*200);
 		graphics.setColor(Color.WHITE);
-		graphics.fillOval(20, 10, (int)radius*200-20, (int)radius*200-20);
+		graphics.fillOval(centreX-80, centreY-90, (int)radius*200-20, (int)radius*200-20);
 		double force = -velocity*3.2;
 		for (int i=0; i<numBuckets; i++) {
 			force += buckets[i].calculateForce();
@@ -65,7 +69,7 @@ public class MalkusWaterwheel extends JPanel {
 	
 	public static void main(String[] args) {
 		JFrame frame = new JFrame("Malkus waterwheel");
-		MalkusWaterwheel mww = new MalkusWaterwheel();
+		MalkusWaterwheel mww = new MalkusWaterwheel(100, 100);
 		frame.add(mww);
 		frame.setSize(550, 250);
 		frame.setVisible(true);
