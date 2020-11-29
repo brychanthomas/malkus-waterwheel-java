@@ -29,8 +29,8 @@ public class WaterwheelPanel extends JPanel {
 	
 	WaterwheelPanel () throws IOException {
 		wheels = new MalkusWaterwheel[2];
-		wheels[0] = new MalkusWaterwheel(100, 100, Math.toRadians(1));
-		wheels[1] = new MalkusWaterwheel(350, 100, Math.toRadians(2));
+		wheels[0] = new MalkusWaterwheel(120, 100, Math.toRadians(1));
+		wheels[1] = new MalkusWaterwheel(370, 100, Math.toRadians(2));
 		
 		initCSV();
 		

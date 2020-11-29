@@ -1,5 +1,6 @@
 package com.brychan;
 
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -17,6 +18,7 @@ public class MalkusWaterwheel {
 	int    numBuckets = 16;
 	int centreX;
 	int centreY;
+	double angularCoord = 0;
 	
 	MalkusWaterwheel (int centreXCoord, int centreYCoord, double offset) {
 		centreX = centreXCoord;
@@ -37,14 +39,20 @@ public class MalkusWaterwheel {
 		for (int i=0; i<numBuckets; i++) {
 			buckets[i].update(velocity);
 		}
+		angularCoord += velocity / WaterwheelPanel.FPS;
 	}
 
 	public void draw(Graphics g) {
 		Graphics2D graphics = (Graphics2D)g;
 		graphics.setColor(Color.ORANGE);
-		graphics.fillOval(centreX-90, centreY-100, (int)radius*200, (int)radius*200);
-		graphics.setColor(Color.WHITE);
-		graphics.fillOval(centreX-80, centreY-90, (int)radius*200-20, (int)radius*200-20);
+		graphics.setStroke(new BasicStroke(10));
+		graphics.drawOval(centreX-(int)radius*100, centreY-(int)radius*100, (int)radius*200, (int)radius*200);
+		graphics.fillOval(centreX-20, centreY-20, 40, 40);
+		graphics.drawLine(polarToX(angularCoord), polarToY(angularCoord), polarToX(angularCoord+Math.PI), polarToY(angularCoord+Math.PI));
+		graphics.drawLine(polarToX(angularCoord+Math.PI/2), polarToY(angularCoord+Math.PI/2), polarToX(angularCoord+3*Math.PI/2), polarToY(angularCoord+3*Math.PI/2));
+		graphics.fillRect(centreX-3, centreY-3, 6, 6);
+		graphics.setStroke(new BasicStroke(1));
+		
 		double minY = 10000;
 		double y = 0;
 		int    minYIdx = 0;
@@ -63,5 +71,13 @@ public class MalkusWaterwheel {
 			bucketMass += buckets[i].mass;
 		}
 		return bucketMass + wheelMass;
+	}
+	
+	private int polarToX(double angular) {
+		return (int)(centreX + 100*radius*Math.cos(angular));
+	}
+	
+	private int polarToY(double angular) {
+		return (int)(centreY - 100*radius*Math.sin(angular));
 	}
 }

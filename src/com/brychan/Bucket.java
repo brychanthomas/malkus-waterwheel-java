@@ -32,13 +32,13 @@ public class Bucket {
 		int y = (int)(centreY - radial * Math.sin(angular));
 		int x = (int)(centreX + radial * Math.cos(angular));
 		g.setColor(Color.BLUE);
-		g.fillRect(x, y+20-(int)(mass*41), 20, (int)(mass*41));
+		g.fillRect(x-10, y+20-(int)(mass*41), 20, (int)(mass*41));
 		g.setColor(Color.GREEN);
-		g.fillRect(x+10, y, 2, 2);
+		g.fillRect(x-1, y, 2, 2);
 		g.setColor(Color.BLACK);
-		g.drawLine(x, y, x, y+20);
-		g.drawLine(x, y+20, x+20, y+20);
-		g.drawLine(x+20, y+20, x+20, y);
+		g.drawLine(x-10, y, x-10, y+20);
+		g.drawLine(x-10, y+20, x+10, y+20);
+		g.drawLine(x+10, y+20, x+10, y);
 		return y;
 	}
 	
