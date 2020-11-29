@@ -1,12 +1,16 @@
 package com.brychan;
 
+import java.awt.BasicStroke;
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Stroke;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.awt.geom.AffineTransform;
 import java.io.FileWriter;
 import java.io.IOException;
 
@@ -47,13 +51,41 @@ public class WaterwheelPanel extends JPanel {
 	public void paint(Graphics g) {
 		Graphics2D graphics = (Graphics2D)g;
 		graphics.setColor(Color.WHITE);
-		graphics.fillRect(0,  0, 700, 400);
+		graphics.fillRect(0,  0, 600, 400);
+		if (frameCount < 3) {
+			graphics.fillRect(0, 0, 900, 800);
+		}
+		graphics.setColor(Color.BLACK);
+		g.setFont(new Font("Sans-serif", Font.PLAIN, 16)); 
+		graphics.drawString("Centres of mass", 230, 420);
+		graphics.drawString("Initial angle = 1°", 100, 40);
+		graphics.drawString("Initial angle = 2°", 400, 40);
+		graphics.drawLine(610, 0, 610, 800);
+		graphics.drawLine(0, 390, 610, 390);
 		for (int i=0; i<wheels.length; i++) {
 			wheels[i].update();
 			wheels[i].draw(g);
 		}
+		drawAttractors(graphics);
 		writeCSV();
 		frameCount++;
+	}
+	
+	private void drawAttractors(Graphics2D graphics) {
+		graphics.setColor(Color.BLACK);
+		graphics.drawString("Lorenz attractors for left wheel:", 650, 75);
+		graphics.setFont(new Font("Sans-serif", Font.PLAIN, 12)); 
+		graphics.drawString("Velocity", 720, 300);
+		graphics.drawString("Velocity", 720, 500);
+		AffineTransform orig = graphics.getTransform();
+		graphics.rotate(-Math.PI/2);
+		graphics.setColor(Color.BLACK);
+		graphics.drawString("Centre of mass X coord", -280, 630);
+		graphics.drawString("Centre of mass Y coord", -480, 630);
+		graphics.setTransform(orig);
+		graphics.setColor(Color.CYAN);
+		graphics.drawRect((int)(750+wheels[0].velocity*80), (int)(200+wheels[0].centreOfMassX()*6), 1, 1);
+		graphics.drawRect((int)(750+wheels[0].velocity*80), (int)(400+wheels[0].centreOfMassY()*6), 1, 1);
 	}
 	
 	private void initCSV() throws IOException {
@@ -96,7 +128,7 @@ public class WaterwheelPanel extends JPanel {
 		try {
 			WaterwheelPanel panel = new WaterwheelPanel();
 			frame.add(panel);
-			frame.setSize(630, 400);
+			frame.setSize(900, 600);
 			frame.setVisible(true);
 			frame.addWindowListener(new WindowAdapter() {
 	            @Override

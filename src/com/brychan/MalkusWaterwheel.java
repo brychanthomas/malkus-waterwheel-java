@@ -66,6 +66,8 @@ public class MalkusWaterwheel {
 		for (int i=0; i<numBuckets; i++) {
 			buckets[i].draw(graphics);
 		}
+		
+		drawPlot(graphics);
 	 }
 	
 	private double mass() {
@@ -98,5 +100,10 @@ public class MalkusWaterwheel {
 			count += buckets[i].mass * buckets[i].getY();
 		}
 		return (count / mass());
+	}
+	
+	private void drawPlot(Graphics2D g) {
+		g.setColor(Color.RED);
+		g.drawRect((int)(centreX+centreOfMassX()*6), (int)(centreY+radius*100+160+centreOfMassY()*6), 1, 1);
 	}
 }
