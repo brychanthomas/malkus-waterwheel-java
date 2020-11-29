@@ -85,7 +85,7 @@ public class WaterwheelPanel extends JPanel {
 		graphics.setTransform(orig);
 		graphics.setColor(Color.CYAN);
 		graphics.drawRect((int)(750+wheels[0].velocity*80), (int)(200+wheels[0].centreOfMassX()*6), 1, 1);
-		graphics.drawRect((int)(750+wheels[0].velocity*80), (int)(400+wheels[0].centreOfMassY()*6), 1, 1);
+		graphics.drawRect((int)(750+wheels[0].velocity*80), (int)(450+wheels[0].centreOfMassY()*6), 1, 1);
 	}
 	
 	private void initCSV() throws IOException {
