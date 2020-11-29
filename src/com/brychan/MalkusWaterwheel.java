@@ -84,19 +84,19 @@ public class MalkusWaterwheel {
 		return (int)(centreY - 100*radius*Math.sin(angular));
 	}
 	
-	public int centreOfMassX() {
+	public double centreOfMassX() {
 		double count = 0;
 		for (var i=0; i<numBuckets; i++) {
 			count += buckets[i].mass * buckets[i].getX();
 		}
-		return (int)(count / mass());
+		return (count / mass());
 	}
 	
-	public int centreOfMassY() {
+	public double centreOfMassY() {
 		double count = 0;
 		for (var i=0; i<numBuckets; i++) {
 			count += buckets[i].mass * buckets[i].getY();
 		}
-		return (int)(count / mass());
+		return (count / mass());
 	}
 }

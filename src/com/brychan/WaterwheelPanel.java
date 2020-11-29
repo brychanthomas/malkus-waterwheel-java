@@ -73,10 +73,10 @@ public class WaterwheelPanel extends JPanel {
 			csvWriter.append(Double.toString(time)+",");
 			csvWriter.append(Double.toString(wheels[0].velocity)+",");
 			csvWriter.append(Double.toString(wheels[1].velocity)+",");
-			csvWriter.append(Integer.toString(wheels[0].centreOfMassX())+",");
-			csvWriter.append(Integer.toString(wheels[1].centreOfMassX())+",");
-			csvWriter.append(Integer.toString(wheels[0].centreOfMassY())+",");
-			csvWriter.append(Integer.toString(wheels[1].centreOfMassY())+"\n");
+			csvWriter.append(Double.toString(wheels[0].centreOfMassX())+",");
+			csvWriter.append(Double.toString(wheels[1].centreOfMassX())+",");
+			csvWriter.append(Double.toString(wheels[0].centreOfMassY())+",");
+			csvWriter.append(Double.toString(wheels[1].centreOfMassY())+"\n");
 		} catch (IOException e) {
 			System.out.println("IOException!");
 		}

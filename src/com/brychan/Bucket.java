@@ -50,11 +50,11 @@ public class Bucket {
 		return -mass * 9.81 * Math.cos(angular);
 	}
 	
-	int getX() {
-		return (int)(radial * Math.cos(angular));
+	double getX() {
+		return (radial * Math.cos(angular));
 	}
 	
-	int getY() {
-		return (int)(-radial * Math.sin(angular));
+	double getY() {
+		return (-radial * Math.sin(angular));
 	}
 }
