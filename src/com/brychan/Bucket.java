@@ -26,9 +26,8 @@ public class Bucket {
 	
 	/**
 	 * Draw the bucket on the canvas.
-	 * @return the y coordinate of the bucket
 	 */
-	double draw(Graphics2D g) {
+	void draw(Graphics2D g) {
 		int y = (int)(centreY - radial * Math.sin(angular));
 		int x = (int)(centreX + radial * Math.cos(angular));
 		g.setColor(Color.BLUE);
@@ -39,7 +38,6 @@ public class Bucket {
 		g.drawLine(x-10, y, x-10, y+20);
 		g.drawLine(x-10, y+20, x+10, y+20);
 		g.drawLine(x+10, y+20, x+10, y);
-		return y;
 	}
 	
 	void update(double velocity) {
@@ -50,5 +48,13 @@ public class Bucket {
 	
 	double calculateForce() {
 		return -mass * 9.81 * Math.cos(angular);
+	}
+	
+	int getX() {
+		return (int)(radial * Math.cos(angular));
+	}
+	
+	int getY() {
+		return (int)(-radial * Math.sin(angular));
 	}
 }

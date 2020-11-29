@@ -13,7 +13,7 @@ import java.awt.Graphics2D;
 public class MalkusWaterwheel {
 	Bucket[] buckets;
 	double velocity = 0;
-	double radius = 1;
+	double radius = 1.3;
 	double wheelMass = 10;
 	int    numBuckets = 16;
 	int centreX;
@@ -30,15 +30,25 @@ public class MalkusWaterwheel {
 	}
 	
 	public void update() {
-		double force = -velocity*3.2;
+		double force = -velocity*4.5;
 		for (int i=0; i<numBuckets; i++) {
 			force += buckets[i].calculateForce();
 		}
 		double acc = (force) / (mass() * radius);
 		velocity += acc / WaterwheelPanel.FPS;
+		
+		double minY = 10000;
+		double y = 0;
+		int    minYIdx = 0;
 		for (int i=0; i<numBuckets; i++) {
 			buckets[i].update(velocity);
+			y = buckets[i].getY();
+			minY = Math.min(y, minY); //find smallest y coordinate
+			minYIdx = (minY == y) ? i : minYIdx;
 		}
+		buckets[minYIdx].mass += 0.35 / WaterwheelPanel.FPS; //increase  mass of top bucket
+		buckets[minYIdx].mass = (buckets[minYIdx].mass > 0.5) ? 0.5 : buckets[minYIdx].mass; //limit mass to 1
+		
 		angularCoord += velocity / WaterwheelPanel.FPS;
 	}
 
@@ -46,23 +56,16 @@ public class MalkusWaterwheel {
 		Graphics2D graphics = (Graphics2D)g;
 		graphics.setColor(Color.ORANGE);
 		graphics.setStroke(new BasicStroke(10));
-		graphics.drawOval(centreX-(int)radius*100, centreY-(int)radius*100, (int)radius*200, (int)radius*200);
+		graphics.drawOval((int)(centreX-radius*100), (int)(centreY-radius*100), (int)(radius*200), (int)(radius*200));
 		graphics.fillOval(centreX-20, centreY-20, 40, 40);
 		graphics.drawLine(polarToX(angularCoord), polarToY(angularCoord), polarToX(angularCoord+Math.PI), polarToY(angularCoord+Math.PI));
 		graphics.drawLine(polarToX(angularCoord+Math.PI/2), polarToY(angularCoord+Math.PI/2), polarToX(angularCoord+3*Math.PI/2), polarToY(angularCoord+3*Math.PI/2));
 		graphics.fillRect(centreX-3, centreY-3, 6, 6);
 		graphics.setStroke(new BasicStroke(1));
 		
-		double minY = 10000;
-		double y = 0;
-		int    minYIdx = 0;
 		for (int i=0; i<numBuckets; i++) {
-			y = buckets[i].draw(graphics);
-			minY = Math.min(y, minY); //find smallest y coordinate
-			minYIdx = (minY == y) ? i : minYIdx;
+			buckets[i].draw(graphics);
 		}
-		buckets[minYIdx].mass += 0.25 / WaterwheelPanel.FPS; //increase  mass of top bucket
-		buckets[minYIdx].mass = (buckets[minYIdx].mass > 0.5) ? 0.5 : buckets[minYIdx].mass; //limit mass to 1
 	 }
 	
 	private double mass() {
@@ -79,5 +82,21 @@ public class MalkusWaterwheel {
 	
 	private int polarToY(double angular) {
 		return (int)(centreY - 100*radius*Math.sin(angular));
+	}
+	
+	public int centreOfMassX() {
+		double count = 0;
+		for (var i=0; i<numBuckets; i++) {
+			count += buckets[i].mass * buckets[i].getX();
+		}
+		return (int)(count / mass());
+	}
+	
+	public int centreOfMassY() {
+		double count = 0;
+		for (var i=0; i<numBuckets; i++) {
+			count += buckets[i].mass * buckets[i].getY();
+		}
+		return (int)(count / mass());
 	}
 }

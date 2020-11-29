@@ -29,8 +29,8 @@ public class WaterwheelPanel extends JPanel {
 	
 	WaterwheelPanel () throws IOException {
 		wheels = new MalkusWaterwheel[2];
-		wheels[0] = new MalkusWaterwheel(120, 100, Math.toRadians(1));
-		wheels[1] = new MalkusWaterwheel(370, 100, Math.toRadians(2));
+		wheels[0] = new MalkusWaterwheel(150, 200, Math.toRadians(1));
+		wheels[1] = new MalkusWaterwheel(450, 200, Math.toRadians(2));
 		
 		initCSV();
 		
@@ -47,7 +47,7 @@ public class WaterwheelPanel extends JPanel {
 	public void paint(Graphics g) {
 		Graphics2D graphics = (Graphics2D)g;
 		graphics.setColor(Color.WHITE);
-		graphics.fillRect(0,  0, 550, 250);
+		graphics.fillRect(0,  0, 700, 400);
 		for (int i=0; i<wheels.length; i++) {
 			wheels[i].update();
 			wheels[i].draw(g);
@@ -60,7 +60,11 @@ public class WaterwheelPanel extends JPanel {
 		csvWriter = new FileWriter("data.csv");
 		csvWriter.append("time,");
 		csvWriter.append("wheel1 angular velocity,");
-		csvWriter.append("wheel2 angular velocity\n");
+		csvWriter.append("wheel2 angular velocity,");
+		csvWriter.append("wheel1 centre of mass x,");
+		csvWriter.append("wheel2 centre of mass x,");
+		csvWriter.append("wheel1 centre of mass y,");
+		csvWriter.append("wheel2 centre of mass y\n");
 	}
 	
 	private void writeCSV() {
@@ -68,7 +72,11 @@ public class WaterwheelPanel extends JPanel {
 			double time = (double)frameCount / FPS;
 			csvWriter.append(Double.toString(time)+",");
 			csvWriter.append(Double.toString(wheels[0].velocity)+",");
-			csvWriter.append(Double.toString(wheels[1].velocity)+"\n");
+			csvWriter.append(Double.toString(wheels[1].velocity)+",");
+			csvWriter.append(Integer.toString(wheels[0].centreOfMassX())+",");
+			csvWriter.append(Integer.toString(wheels[1].centreOfMassX())+",");
+			csvWriter.append(Integer.toString(wheels[0].centreOfMassY())+",");
+			csvWriter.append(Integer.toString(wheels[1].centreOfMassY())+"\n");
 		} catch (IOException e) {
 			System.out.println("IOException!");
 		}
@@ -88,7 +96,7 @@ public class WaterwheelPanel extends JPanel {
 		try {
 			WaterwheelPanel panel = new WaterwheelPanel();
 			frame.add(panel);
-			frame.setSize(500, 270);
+			frame.setSize(630, 400);
 			frame.setVisible(true);
 			frame.addWindowListener(new WindowAdapter() {
 	            @Override
