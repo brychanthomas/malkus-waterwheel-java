@@ -26,24 +26,29 @@ public class MalkusWaterwheel {
 			buckets[i] = new Bucket((i*2*Math.PI/numBuckets)+offset, radius*100, centreX, centreY);
 		}
 	}
-
-	public void paint(Graphics g) {
-		Graphics2D graphics = (Graphics2D)g;
-		graphics.setColor(Color.ORANGE);
-		graphics.fillOval(centreX-90, centreY-100, (int)radius*200, (int)radius*200);
-		graphics.setColor(Color.WHITE);
-		graphics.fillOval(centreX-80, centreY-90, (int)radius*200-20, (int)radius*200-20);
+	
+	public void update() {
 		double force = -velocity*3.2;
 		for (int i=0; i<numBuckets; i++) {
 			force += buckets[i].calculateForce();
 		}
 		double acc = (force) / (mass() * radius);
 		velocity += acc / WaterwheelPanel.FPS;
+		for (int i=0; i<numBuckets; i++) {
+			buckets[i].update(velocity);
+		}
+	}
+
+	public void draw(Graphics g) {
+		Graphics2D graphics = (Graphics2D)g;
+		graphics.setColor(Color.ORANGE);
+		graphics.fillOval(centreX-90, centreY-100, (int)radius*200, (int)radius*200);
+		graphics.setColor(Color.WHITE);
+		graphics.fillOval(centreX-80, centreY-90, (int)radius*200-20, (int)radius*200-20);
 		double minY = 10000;
 		double y = 0;
 		int    minYIdx = 0;
 		for (int i=0; i<numBuckets; i++) {
-			buckets[i].update(velocity);
 			y = buckets[i].draw(graphics);
 			minY = Math.min(y, minY); //find smallest y coordinate
 			minYIdx = (minY == y) ? i : minYIdx;

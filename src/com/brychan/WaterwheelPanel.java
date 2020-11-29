@@ -49,7 +49,8 @@ public class WaterwheelPanel extends JPanel {
 		graphics.setColor(Color.WHITE);
 		graphics.fillRect(0,  0, 550, 250);
 		for (int i=0; i<wheels.length; i++) {
-			wheels[i].paint(g);
+			wheels[i].update();
+			wheels[i].draw(g);
 		}
 		writeCSV();
 		frameCount++;
