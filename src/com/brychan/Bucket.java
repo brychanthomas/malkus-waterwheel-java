@@ -29,13 +29,17 @@ public class Bucket {
 	 * @return the y coordinate of the bucket
 	 */
 	double draw(Graphics2D g) {
+		int y = (int)(centreY - radial * Math.sin(angular));
+		int x = (int)(centreX + radial * Math.cos(angular));
 		g.setColor(Color.BLUE);
-		double y = radial * Math.sin(angular);
-		double x = radial * Math.cos(angular);
-		g.fillRect((int)(centreX+x), (int)(centreY-y), 20, (int)(mass*40));
+		g.fillRect(x, y+20-(int)(mass*41), 20, (int)(mass*41));
 		g.setColor(Color.GREEN);
-		g.fillRect((int)(centreX+x)+10, (int)(centreY-y), 2, 2);
-		return centreY-y;
+		g.fillRect(x+10, y, 2, 2);
+		g.setColor(Color.BLACK);
+		g.drawLine(x, y, x, y+20);
+		g.drawLine(x, y+20, x+20, y+20);
+		g.drawLine(x+20, y+20, x+20, y);
+		return y;
 	}
 	
 	void update(double velocity) {

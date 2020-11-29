@@ -87,7 +87,7 @@ public class WaterwheelPanel extends JPanel {
 		try {
 			WaterwheelPanel panel = new WaterwheelPanel();
 			frame.add(panel);
-			frame.setSize(500, 250);
+			frame.setSize(500, 270);
 			frame.setVisible(true);
 			frame.addWindowListener(new WindowAdapter() {
 	            @Override
