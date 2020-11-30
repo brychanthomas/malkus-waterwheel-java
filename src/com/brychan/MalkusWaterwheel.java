@@ -67,6 +67,13 @@ public class MalkusWaterwheel {
 			buckets[i].draw(graphics);
 		}
 		
+		graphics.setColor(Color.CYAN);
+		graphics.drawLine(centreX, (int)(centreY-radius*100-25), centreX, (int)(centreY-radius*100-5));
+		graphics.drawLine(centreX-10, (int)(centreY-radius*100-25), centreX-10, (int)(centreY-radius*100-5));
+		graphics.drawLine(centreX+10, (int)(centreY-radius*100-25), centreX+10, (int)(centreY-radius*100-5));
+		graphics.setColor(Color.GRAY);
+		graphics.fillRect(centreX-15, (int)(centreY-radius*100-40), 30, 15);
+		
 		drawPlot(graphics);
 	 }
 	

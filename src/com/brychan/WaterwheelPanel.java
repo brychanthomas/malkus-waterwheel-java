@@ -57,7 +57,7 @@ public class WaterwheelPanel extends JPanel {
 		}
 		graphics.setColor(Color.BLACK);
 		g.setFont(new Font("Sans-serif", Font.PLAIN, 16)); 
-		graphics.drawString("Centres of mass", 230, 420);
+		graphics.drawString("Centres of mass", 240, 420);
 		graphics.drawString("Initial angle = 1.0°", 100, 20);
 		graphics.drawString("Initial angle = 1.2°", 400, 20);
 		graphics.drawLine(610, 0, 610, 800);
