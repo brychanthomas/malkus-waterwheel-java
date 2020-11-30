@@ -34,7 +34,7 @@ public class WaterwheelPanel extends JPanel {
 	WaterwheelPanel () throws IOException {
 		wheels = new MalkusWaterwheel[2];
 		wheels[0] = new MalkusWaterwheel(150, 200, Math.toRadians(1));
-		wheels[1] = new MalkusWaterwheel(450, 200, Math.toRadians(2));
+		wheels[1] = new MalkusWaterwheel(450, 200, Math.toRadians(1.2));
 		
 		initCSV();
 		
@@ -58,8 +58,8 @@ public class WaterwheelPanel extends JPanel {
 		graphics.setColor(Color.BLACK);
 		g.setFont(new Font("Sans-serif", Font.PLAIN, 16)); 
 		graphics.drawString("Centres of mass", 230, 420);
-		graphics.drawString("Initial angle = 1°", 100, 40);
-		graphics.drawString("Initial angle = 2°", 400, 40);
+		graphics.drawString("Initial angle = 1.0°", 100, 20);
+		graphics.drawString("Initial angle = 1.2°", 400, 20);
 		graphics.drawLine(610, 0, 610, 800);
 		graphics.drawLine(0, 390, 610, 390);
 		for (int i=0; i<wheels.length; i++) {
@@ -73,19 +73,22 @@ public class WaterwheelPanel extends JPanel {
 	
 	private void drawAttractors(Graphics2D graphics) {
 		graphics.setColor(Color.BLACK);
-		graphics.drawString("Lorenz attractors for left wheel:", 650, 75);
+		graphics.drawString("Lorenz attractor for left wheel:", 650, 75);
 		graphics.setFont(new Font("Sans-serif", Font.PLAIN, 12)); 
-		graphics.drawString("Velocity", 720, 300);
-		graphics.drawString("Velocity", 720, 500);
+		graphics.drawString("Velocity", 730, 300);
+		graphics.drawString("Velocity", 730, 500);
 		AffineTransform orig = graphics.getTransform();
 		graphics.rotate(-Math.PI/2);
-		graphics.setColor(Color.BLACK);
-		graphics.drawString("Centre of mass X coord", -280, 630);
+		graphics.drawString("Centre of mass X coord", -270, 630);
 		graphics.drawString("Centre of mass Y coord", -480, 630);
 		graphics.setTransform(orig);
-		graphics.setColor(Color.CYAN);
-		graphics.drawRect((int)(750+wheels[0].velocity*80), (int)(200+wheels[0].centreOfMassX()*6), 1, 1);
-		graphics.drawRect((int)(750+wheels[0].velocity*80), (int)(450+wheels[0].centreOfMassY()*6), 1, 1);
+		graphics.drawLine(745, 200, 755, 200);
+		graphics.drawLine(750, 195, 750, 205);
+		graphics.drawLine(745, 430, 755, 430);
+		graphics.drawLine(750, 425, 750, 435);
+		graphics.setColor(Color.GREEN);
+		graphics.drawRect((int)(750+wheels[0].velocity*80), (int)(200-wheels[0].centreOfMassX()*6), 1, 1);
+		graphics.drawRect((int)(750+wheels[0].velocity*80), (int)(430+wheels[0].centreOfMassY()*6), 1, 1);
 	}
 	
 	private void initCSV() throws IOException {
