@@ -143,12 +143,16 @@ public class WaterwheelPanel extends JPanel {
 	public static void main(String[] args) {
 		JFrame frame = new JFrame("Malkus waterwheel");
 		try {
-			int numWaterwheels = Integer.parseInt(args[0]);
-			double[] initialAngles = new double[numWaterwheels];
-			for (int i=0; i<numWaterwheels; i++) {
-				initialAngles[i] = Double.parseDouble(args[i+1]);
+			int numWaterwheels = 2;
+			double[] initialAngles = {1.0, 1.2};
+			if (args.length > 1) {
+				numWaterwheels = Integer.parseInt(args[0]);
+				initialAngles = new double[numWaterwheels];
+				for (int i=0; i<numWaterwheels; i++) {
+					initialAngles[i] = Double.parseDouble(args[i+1]);
+				}
 			}
-			WaterwheelPanel panel = new WaterwheelPanel(2, initialAngles);
+			WaterwheelPanel panel = new WaterwheelPanel(numWaterwheels, initialAngles);
 			frame.add(panel);
 			frame.setSize(900, 600);
 			frame.setVisible(true);
