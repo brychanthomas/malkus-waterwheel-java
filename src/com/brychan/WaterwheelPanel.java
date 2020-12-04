@@ -1,11 +1,9 @@
 package com.brychan;
 
-import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.Stroke;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
@@ -21,7 +19,7 @@ import javax.swing.Timer;
 /**
  * JPanel subclass to simulate several Malkus waterwheels in parallel.
  * 
- * @author Brychan
+ * @author Brychan Thomas
  *
  */
 public class WaterwheelPanel extends JPanel {
@@ -47,6 +45,9 @@ public class WaterwheelPanel extends JPanel {
 	    new Timer(1000/FPS, updater).start();
 	}
 	
+	/**
+	 * Draw everything on the window every frame.
+	 */
 	@Override
 	public void paint(Graphics g) {
 		Graphics2D graphics = (Graphics2D)g;
@@ -71,6 +72,10 @@ public class WaterwheelPanel extends JPanel {
 		frameCount++;
 	}
 	
+	/**
+	 * Update the Lorenz attractor graphs on the screen.
+	 * @param graphics - the Graphics2D object to use to draw the graphs
+	 */
 	private void drawAttractors(Graphics2D graphics) {
 		graphics.setColor(Color.BLACK);
 		graphics.drawString("Lorenz attractor for left wheel:", 650, 75);
@@ -91,6 +96,9 @@ public class WaterwheelPanel extends JPanel {
 		graphics.drawRect((int)(750+wheels[0].velocity*80), (int)(430+wheels[0].centreOfMassY()*6), 1, 1);
 	}
 	
+	/**
+	 * Open the CSV file and write the column titles to it.
+	 */
 	private void initCSV() throws IOException {
 		csvWriter = new FileWriter("data.csv");
 		csvWriter.append("time,");
@@ -102,6 +110,10 @@ public class WaterwheelPanel extends JPanel {
 		csvWriter.append("wheel2 centre of mass y\n");
 	}
 	
+	/**
+	 * Write the current velocities and centre of mass coordinates of the
+	 * wheels to the CSV files.
+	 */
 	private void writeCSV() {
 		try {
 			double time = (double)frameCount / FPS;
@@ -117,6 +129,9 @@ public class WaterwheelPanel extends JPanel {
 		}
 	}
 	
+	/**
+	 * Close the CSV file.
+	 */
 	private void closeCSV() {
 		try {
 			csvWriter.flush();

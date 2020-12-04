@@ -27,7 +27,7 @@ public class Bucket {
 	}
 	
 	/**
-	 * Draw the bucket on the canvas.
+	 * Draw the bucket on the canvas every frame.
 	 */
 	void draw(Graphics2D g) {
 		int y = (int)(centreY - radial * Math.sin(angular));
@@ -49,20 +49,37 @@ public class Bucket {
 		g.drawLine(x+10, y+20, x+10, y);
 	}
 	
+	/**
+	 * Update the position of the bucket using the wheel's angular velocity.
+	 * @param velocity - angular velocity of wheel (radians/second)
+	 */
 	void update(double velocity) {
 		angular += (velocity/WaterwheelPanel.FPS);
 		mass -= (0.04 / WaterwheelPanel.FPS);
 		mass = (mass < 0) ? 0 : mass;
 	}
 	
+	/**
+	 * Calculate the component of the bucket's weight perpendicular to the
+	 * wheel's radius.
+	 * @return component of weight (Newtons)
+	 */
 	double calculateForce() {
 		return -mass * 9.81 * Math.cos(angular);
 	}
 	
+	/**
+	 * Get Cartesian x coordinate of bucket.
+	 * @return x coordinate of bucket
+	 */
 	double getX() {
 		return (radial * Math.cos(angular));
 	}
 	
+	/**
+	 * Get Cartesian y coordinate of the bucket.
+	 * @return y coordinate of bucket
+	 */
 	double getY() {
 		return (-radial * Math.sin(angular));
 	}

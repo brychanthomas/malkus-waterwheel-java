@@ -29,6 +29,10 @@ public class MalkusWaterwheel {
 		}
 	}
 	
+	/**
+	 * Update the velocity and coordinates of the wheel + buckets every frame, and add
+	 * water to the top bucket.
+	 */
 	public void update() {
 		double force = -velocity*4.5;
 		for (int i=0; i<numBuckets; i++) {
@@ -51,7 +55,11 @@ public class MalkusWaterwheel {
 		
 		angularCoord += velocity / WaterwheelPanel.FPS;
 	}
-
+	
+	/**
+	 * Draw the wheel and its buckets to the window every frame.
+	 * @param g - Graphics object used to draw wheel and buckets
+	 */
 	public void draw(Graphics g) {
 		Graphics2D graphics = (Graphics2D)g;
 		graphics.setColor(Color.ORANGE);
@@ -77,6 +85,10 @@ public class MalkusWaterwheel {
 		drawPlot(graphics);
 	 }
 	
+	/**
+	 * Get the total mass of the wheel and all of the buckets.
+	 * @return total mass (kg)
+	 */
 	private double mass() {
 		double bucketMass = 0;
 		for (var i=0; i<numBuckets; i++) {
@@ -85,14 +97,28 @@ public class MalkusWaterwheel {
 		return bucketMass + wheelMass;
 	}
 	
+	/**
+	 * Convert a polar coordinate angle to a Cartesian x coordinate.
+	 * @param angular - the angle of the polar coordinate
+	 * @return the x coordinate of the point on the wheel at that angle
+	 */
 	private int polarToX(double angular) {
 		return (int)(centreX + 100*radius*Math.cos(angular));
 	}
 	
+	/**
+	 * Convert a polar coordinate angle to a Cartesian y coordinate.
+	 * @param angular - the angle of the polar coordinate
+	 * @return the y coordinate of the point on the wheel at that angle
+	 */
 	private int polarToY(double angular) {
 		return (int)(centreY - 100*radius*Math.sin(angular));
 	}
 	
+	/**
+	 * Get the x coordinate of the centre of mass of the wheel and buckets.
+	 * @return x coordinate of centre of mass
+	 */
 	public double centreOfMassX() {
 		double count = 0;
 		for (var i=0; i<numBuckets; i++) {
@@ -101,6 +127,10 @@ public class MalkusWaterwheel {
 		return (count / mass());
 	}
 	
+	/**
+	 * Get the y coordinate of the centre of mass of the wheel and buckets.
+	 * @return y coordinate of centre of mass
+	 */
 	public double centreOfMassY() {
 		double count = 0;
 		for (var i=0; i<numBuckets; i++) {
@@ -109,6 +139,10 @@ public class MalkusWaterwheel {
 		return (count / mass());
 	}
 	
+	/**
+	 * Update the plot of the wheel's centre of mass below the wheel every frame.
+	 * @param g - the Graphics2D object to use to draw the plot
+	 */
 	private void drawPlot(Graphics2D g) {
 		g.setColor(Color.RED);
 		g.drawRect((int)(centreX+centreOfMassX()*6), (int)(centreY+radius*100+160+centreOfMassY()*6), 1, 1);
