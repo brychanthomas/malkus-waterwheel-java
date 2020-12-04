@@ -29,10 +29,10 @@ public class WaterwheelPanel extends JPanel {
 	MalkusWaterwheel[] wheels;
 	FileWriter csvWriter;
 	
-	WaterwheelPanel (int numWaterwheels) throws IOException {
+	WaterwheelPanel (int numWaterwheels, double[] initialAngles) throws IOException {
 		wheels = new MalkusWaterwheel[numWaterwheels];
 		for (int i = 0; i<numWaterwheels; i++) {
-			wheels[i] = new MalkusWaterwheel(150+i*300, 200, Math.toRadians(1));
+			wheels[i] = new MalkusWaterwheel(150+i*300, 200, Math.toRadians(initialAngles[i]));
 		}
 		
 		initCSV();
@@ -143,7 +143,12 @@ public class WaterwheelPanel extends JPanel {
 	public static void main(String[] args) {
 		JFrame frame = new JFrame("Malkus waterwheel");
 		try {
-			WaterwheelPanel panel = new WaterwheelPanel(2);
+			int numWaterwheels = Integer.parseInt(args[0]);
+			double[] initialAngles = new double[numWaterwheels];
+			for (int i=0; i<numWaterwheels; i++) {
+				initialAngles[i] = Double.parseDouble(args[i+1]);
+			}
+			WaterwheelPanel panel = new WaterwheelPanel(2, initialAngles);
 			frame.add(panel);
 			frame.setSize(900, 600);
 			frame.setVisible(true);

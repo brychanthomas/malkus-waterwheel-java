@@ -18,9 +18,10 @@ public class MalkusWaterwheel {
 	int    numBuckets = 16;
 	int centreX;
 	int centreY;
-	double angularCoord = 0;
+	double angularCoord;
 	
 	MalkusWaterwheel (int centreXCoord, int centreYCoord, double offset) {
+		angularCoord = offset;
 		centreX = centreXCoord;
 		centreY = centreYCoord;
 		buckets = new Bucket[numBuckets];
