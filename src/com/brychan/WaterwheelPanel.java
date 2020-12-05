@@ -55,7 +55,7 @@ public class WaterwheelPanel extends JPanel {
 		graphics.setColor(Color.WHITE);
 		graphics.fillRect(0,  0, 600, 400);
 		if (frameCount < 3) {
-			graphics.fillRect(0, 0, 900, 800);
+			graphics.fillRect(0, 0, 300*(wheels.length+1), 800);
 		}
 		graphics.setColor(Color.BLACK);
 		g.setFont(new Font("Sans-serif", Font.PLAIN, 16)); 
@@ -79,22 +79,22 @@ public class WaterwheelPanel extends JPanel {
 	 */
 	private void drawAttractors(Graphics2D graphics) {
 		graphics.setColor(Color.BLACK);
-		graphics.drawString("Lorenz attractor for left wheel:", 650, 75);
+		graphics.drawString("Lorenz attractor for left wheel:", (wheels.length*300)+50, 75);
 		graphics.setFont(new Font("Sans-serif", Font.PLAIN, 12)); 
-		graphics.drawString("Velocity", 730, 300);
-		graphics.drawString("Velocity", 730, 500);
+		graphics.drawString("Velocity", (wheels.length*300)+130, 300);
+		graphics.drawString("Velocity", (wheels.length*300)+130, 500);
 		AffineTransform orig = graphics.getTransform();
 		graphics.rotate(-Math.PI/2);
-		graphics.drawString("Centre of mass X coord", -270, 630);
-		graphics.drawString("Centre of mass Y coord", -480, 630);
+		graphics.drawString("Centre of mass X coord", -270, (wheels.length*300)+30);
+		graphics.drawString("Centre of mass Y coord", -480, (wheels.length*300)+30);
 		graphics.setTransform(orig);
-		graphics.drawLine(745, 200, 755, 200);
-		graphics.drawLine(750, 195, 750, 205);
-		graphics.drawLine(745, 430, 755, 430);
-		graphics.drawLine(750, 425, 750, 435);
+		graphics.drawLine((wheels.length*300)+145, 200, (wheels.length*300)+155, 200);
+		graphics.drawLine((wheels.length*300)+150, 195, (wheels.length*300)+150, 205);
+		graphics.drawLine((wheels.length*300)+145, 430, (wheels.length*300)+155, 430);
+		graphics.drawLine((wheels.length*300)+150, 425, (wheels.length*300)+150, 435);
 		graphics.setColor(Color.GREEN);
-		graphics.drawRect((int)(750+wheels[0].velocity*80), (int)(200-wheels[0].centreOfMassX()*6), 1, 1);
-		graphics.drawRect((int)(750+wheels[0].velocity*80), (int)(430+wheels[0].centreOfMassY()*6), 1, 1);
+		graphics.drawRect((int)((wheels.length*300)+150+wheels[0].velocity*80), (int)(200-wheels[0].centreOfMassX()*6), 1, 1);
+		graphics.drawRect((int)((wheels.length*300)+150+wheels[0].velocity*80), (int)(430+wheels[0].centreOfMassY()*6), 1, 1);
 	}
 	
 	/**
@@ -154,7 +154,8 @@ public class WaterwheelPanel extends JPanel {
 			}
 			WaterwheelPanel panel = new WaterwheelPanel(numWaterwheels, initialAngles);
 			frame.add(panel);
-			frame.setSize(900, 600);
+			frame.setSize((numWaterwheels+1)*300, 600);
+			frame.getContentPane().setBackground(Color.BLUE);
 			frame.setVisible(true);
 			frame.addWindowListener(new WindowAdapter() {
 	            @Override
