@@ -11,7 +11,7 @@ import java.awt.Stroke;
  * 
  * @author Brychan Thomas
  */
-public class Bucket {
+class Bucket {
 	
 	private double radial;
 	private double angular;
@@ -29,7 +29,7 @@ public class Bucket {
 	/**
 	 * Draw the bucket on the canvas every frame.
 	 */
-	public void draw(Graphics2D g) {
+	void draw(Graphics2D g) {
 		int y = (int)(centreY - radial * Math.sin(angular));
 		int x = (int)(centreX + radial * Math.cos(angular));
 		g.setColor(Color.BLUE);
@@ -53,7 +53,7 @@ public class Bucket {
 	 * Update the position of the bucket using the wheel's angular velocity.
 	 * @param velocity - angular velocity of wheel (radians/second)
 	 */
-	public void update(double velocity) {
+	void update(double velocity) {
 		angular += (velocity/WaterwheelPanel.FPS);
 		mass -= (0.04 / WaterwheelPanel.FPS);
 		mass = (mass < 0) ? 0 : mass;
@@ -64,7 +64,7 @@ public class Bucket {
 	 * wheel's radius.
 	 * @return component of weight (Newtons)
 	 */
-	public double calculateForce() {
+	double calculateForce() {
 		return -mass * 9.81 * Math.cos(angular);
 	}
 	
@@ -72,7 +72,7 @@ public class Bucket {
 	 * Get Cartesian x coordinate of bucket.
 	 * @return x coordinate of bucket
 	 */
-	public double getX() {
+	double getX() {
 		return (radial * Math.cos(angular));
 	}
 	
@@ -80,7 +80,7 @@ public class Bucket {
 	 * Get Cartesian y coordinate of the bucket.
 	 * @return y coordinate of bucket
 	 */
-	public double getY() {
+	double getY() {
 		return (-radial * Math.sin(angular));
 	}
 }

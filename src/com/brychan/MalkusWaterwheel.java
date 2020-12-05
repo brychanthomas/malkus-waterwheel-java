@@ -10,7 +10,7 @@ import java.awt.Graphics2D;
  * 
  * @author Brychan Thomas
  */
-public class MalkusWaterwheel {
+class MalkusWaterwheel {
 	Bucket[] buckets;
 	public  double velocity = 0;
 	private double radius = 1.3;
@@ -42,7 +42,7 @@ public class MalkusWaterwheel {
 	 * Update the velocity and coordinates of the wheel + buckets every frame, and add
 	 * water to the top bucket.
 	 */
-	public void update() {
+	void update() {
 		double force = -velocity*4.5;
 		for (int i=0; i<numBuckets; i++) {
 			force += buckets[i].calculateForce();
@@ -69,7 +69,7 @@ public class MalkusWaterwheel {
 	 * Draw the wheel and its buckets to the window every frame.
 	 * @param g - Graphics object used to draw wheel and buckets
 	 */
-	public void draw(Graphics g) {
+	void draw(Graphics g) {
 		Graphics2D graphics = (Graphics2D)g;
 		graphics.setColor(Color.BLACK);
 		graphics.drawString("Initial angle = "+initialAngle+"°", centreX-50, 20);
@@ -130,7 +130,7 @@ public class MalkusWaterwheel {
 	 * Get the x coordinate of the centre of mass of the wheel and buckets.
 	 * @return x coordinate of centre of mass
 	 */
-	public double centreOfMassX() {
+	double centreOfMassX() {
 		double count = 0;
 		for (var i=0; i<numBuckets; i++) {
 			count += buckets[i].mass * buckets[i].getX();
@@ -142,7 +142,7 @@ public class MalkusWaterwheel {
 	 * Get the y coordinate of the centre of mass of the wheel and buckets.
 	 * @return y coordinate of centre of mass
 	 */
-	public double centreOfMassY() {
+	double centreOfMassY() {
 		double count = 0;
 		for (var i=0; i<numBuckets; i++) {
 			count += buckets[i].mass * buckets[i].getY();
