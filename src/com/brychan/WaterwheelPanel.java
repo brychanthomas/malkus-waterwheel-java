@@ -106,6 +106,7 @@ public class WaterwheelPanel extends JPanel {
 			csvWriter.append("wheel"+i+" centre of mass x,");
 			csvWriter.append("wheel"+i+" centre of mass y,");
 		}
+		csvWriter.append("\n");
 	}
 	
 	/**
@@ -121,6 +122,7 @@ public class WaterwheelPanel extends JPanel {
 				csvWriter.append(Double.toString(wheels[i].centreOfMassX())+",");
 				csvWriter.append(Double.toString(wheels[i].centreOfMassY())+",");
 			}
+			csvWriter.append("\n");
 		} catch (IOException e) {
 			System.out.println("IOException!");
 		}
@@ -141,8 +143,8 @@ public class WaterwheelPanel extends JPanel {
 	public static void main(String[] args) {
 		JFrame frame = new JFrame("Malkus waterwheel");
 		try {
-			int numWaterwheels = 3;
-			double[] initialAngles = {1.0, 1.2, 1.4};
+			int numWaterwheels = 2;
+			double[] initialAngles = {1.0, 1.2};
 			if (args.length > 1) {
 				numWaterwheels = Integer.parseInt(args[0]);
 				initialAngles = new double[numWaterwheels];

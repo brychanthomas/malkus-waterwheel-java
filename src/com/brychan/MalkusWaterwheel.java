@@ -12,14 +12,14 @@ import java.awt.Graphics2D;
  */
 public class MalkusWaterwheel {
 	Bucket[] buckets;
-	double velocity = 0;
-	double radius = 1.3;
-	double wheelMass = 10;
-	int    numBuckets = 16;
-	int centreX;
-	int centreY;
-	double angularCoord;
-	double initialAngle;
+	public  double velocity = 0;
+	private double radius = 1.3;
+	private double wheelMass = 10;
+	private int numBuckets = 16;
+	private int centreX;
+	private int centreY;
+	private double angularCoord;
+	private double initialAngle;
 	
 	/**
 	 * Create a new Malkus waterwheel.
