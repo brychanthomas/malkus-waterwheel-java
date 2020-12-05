@@ -155,7 +155,7 @@ public class WaterwheelPanel extends JPanel {
 			WaterwheelPanel panel = new WaterwheelPanel(numWaterwheels, initialAngles);
 			frame.add(panel);
 			frame.setSize((numWaterwheels+1)*300, 600);
-			frame.getContentPane().setBackground(Color.BLUE);
+			frame.setResizable(false);
 			frame.setVisible(true);
 			frame.addWindowListener(new WindowAdapter() {
 	            @Override
