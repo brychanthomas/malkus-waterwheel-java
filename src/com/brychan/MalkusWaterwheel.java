@@ -19,14 +19,22 @@ public class MalkusWaterwheel {
 	int centreX;
 	int centreY;
 	double angularCoord;
+	double initialAngle;
 	
+	/**
+	 * Create a new Malkus waterwheel.
+	 * @param centreXCoord - x coordinate of centre of wheel
+	 * @param centreYCoord - y coordinate of centre of wheel
+	 * @param offset - initial angle of wheel in degrees
+	 */
 	MalkusWaterwheel (int centreXCoord, int centreYCoord, double offset) {
-		angularCoord = offset;
+		angularCoord = Math.toRadians(offset);
 		centreX = centreXCoord;
 		centreY = centreYCoord;
+		initialAngle = offset;
 		buckets = new Bucket[numBuckets];
 		for (int i = 0; i<numBuckets; i++) {
-			buckets[i] = new Bucket((i*2*Math.PI/numBuckets)+offset, radius*100, centreX, centreY);
+			buckets[i] = new Bucket((i*2*Math.PI/numBuckets)+angularCoord, radius*100, centreX, centreY);
 		}
 	}
 	
@@ -63,6 +71,8 @@ public class MalkusWaterwheel {
 	 */
 	public void draw(Graphics g) {
 		Graphics2D graphics = (Graphics2D)g;
+		graphics.setColor(Color.BLACK);
+		graphics.drawString("Initial angle = "+initialAngle+"°", centreX-50, 20);
 		graphics.setColor(Color.ORANGE);
 		graphics.setStroke(new BasicStroke(10));
 		graphics.drawOval((int)(centreX-radius*100), (int)(centreY-radius*100), (int)(radius*200), (int)(radius*200));

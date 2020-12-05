@@ -32,7 +32,7 @@ public class WaterwheelPanel extends JPanel {
 	WaterwheelPanel (int numWaterwheels, double[] initialAngles) throws IOException {
 		wheels = new MalkusWaterwheel[numWaterwheels];
 		for (int i = 0; i<numWaterwheels; i++) {
-			wheels[i] = new MalkusWaterwheel(150+i*300, 200, Math.toRadians(initialAngles[i]));
+			wheels[i] = new MalkusWaterwheel(150+i*300, 200, initialAngles[i]);
 		}
 		
 		initCSV();
@@ -53,17 +53,15 @@ public class WaterwheelPanel extends JPanel {
 	public void paint(Graphics g) {
 		Graphics2D graphics = (Graphics2D)g;
 		graphics.setColor(Color.WHITE);
-		graphics.fillRect(0,  0, 600, 400);
+		graphics.fillRect(0,  0, (wheels.length*300), 400);
 		if (frameCount < 3) {
 			graphics.fillRect(0, 0, 300*(wheels.length+1), 800);
 		}
 		graphics.setColor(Color.BLACK);
 		g.setFont(new Font("Sans-serif", Font.PLAIN, 16)); 
-		graphics.drawString("Centres of mass", 240, 420);
-		graphics.drawString("Initial angle = 1.0°", 100, 20);
-		graphics.drawString("Initial angle = 1.2°", 400, 20);
-		graphics.drawLine(610, 0, 610, 800);
-		graphics.drawLine(0, 390, 610, 390);
+		graphics.drawString("Centres of mass", (wheels.length*150)-60, 410);
+		graphics.drawLine((wheels.length*300)+10, 0, (wheels.length*300)+10, 800);
+		graphics.drawLine(0, 390, (wheels.length*300)+10, 390);
 		for (int i=0; i<wheels.length; i++) {
 			wheels[i].update();
 			wheels[i].draw(g);
@@ -143,8 +141,8 @@ public class WaterwheelPanel extends JPanel {
 	public static void main(String[] args) {
 		JFrame frame = new JFrame("Malkus waterwheel");
 		try {
-			int numWaterwheels = 2;
-			double[] initialAngles = {1.0, 1.2};
+			int numWaterwheels = 3;
+			double[] initialAngles = {1.0, 1.2, 1.4};
 			if (args.length > 1) {
 				numWaterwheels = Integer.parseInt(args[0]);
 				initialAngles = new double[numWaterwheels];
